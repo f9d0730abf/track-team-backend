@@ -19,7 +19,7 @@ class ChangePositionController(
 
     @PutMapping("/{id}/position")
     fun changePosition(
-        @PathVariable("id")id: UUID,
+        @PathVariable("id") id: UUID,
         @RequestBody request: ChangePositionRequest,
     ) {
         useCase.changePosition(id, request.newLatitude, request.newLongitude)

@@ -1,4 +1,4 @@
-package de.tt.tracking.member.manage
+package de.tt.tracking.member.manage.create
 
 import de.tt.tracking.member.Member
 import de.tt.tracking.member.MemberStorage

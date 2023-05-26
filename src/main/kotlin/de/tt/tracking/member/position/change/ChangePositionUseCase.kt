@@ -1,21 +1,24 @@
 package de.tt.tracking.member.position.change
 
-import de.tt.tracking.member.Member
+import de.tt.tracking.group.GroupStorage
 import de.tt.tracking.member.MemberStorage
 import org.springframework.stereotype.Component
 import java.util.UUID
 
 @Component
 class ChangePositionUseCase(
-    private val storage: MemberStorage
+    private val memberStorage: MemberStorage,
+    private val groupStorage: GroupStorage,
 ) {
-    fun changePosition(id: UUID, newLatitude: Double, newLongitude: Double): Member {
-        val member = storage.get(id)
+    fun changePosition(id: UUID, newLatitude: Double, newLongitude: Double) {
+        val member = memberStorage.get(id)
 
-        val updatedMember = member.changePosition(newLatitude, newLongitude)
+        val groups = groupStorage.get(member.groups)
 
-        storage.store(updatedMember)
+        val updatedGroups = groups
+            .map { it.changePosition(id, newLatitude, newLongitude) }
+            .toSet()
 
-        return updatedMember
+        groupStorage.store(updatedGroups)
     }
 }

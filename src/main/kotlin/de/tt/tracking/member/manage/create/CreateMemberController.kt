@@ -1,4 +1,4 @@
-package de.tt.tracking.member.manage
+package de.tt.tracking.member.manage.create
 
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
