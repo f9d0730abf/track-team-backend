@@ -6,4 +6,6 @@ import java.util.UUID
 
 interface MongoDbGroupRepository: MongoRepository<GroupDbo, UUID> {
     fun findByName(name: String): Optional<GroupDbo>
+
+    fun existsByName(name: String): Boolean
 }

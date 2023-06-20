@@ -2,6 +2,7 @@ package de.tt.tracking.group
 
 import org.springframework.stereotype.Component
 import java.util.UUID
+import kotlin.jvm.optionals.getOrNull
 
 @Component
 class MongoDbGroupStorage(
@@ -9,7 +10,7 @@ class MongoDbGroupStorage(
 ): GroupStorage {
     override fun get(id: UUID) = repo
         .findById(id)
-        .orElseThrow { NoSuchElementException() }
+        .orElseThrow { GroupWithIdDoesNotExist(id) }
         .toGroup()
 
     override fun get(ids: Set<UUID>) = repo
@@ -20,7 +21,10 @@ class MongoDbGroupStorage(
     override fun get(name: String): Group = repo
         .findByName(name)
         .map(GroupDbo::toGroup)
-        .orElse(NoGroup)
+        .orElseThrow { GroupWithNameDoesNotExist(name) }
+
+    override fun exists(name: String): Boolean = repo
+        .existsByName(name)
 
     override fun store(group: Group) {
         repo.save(group.toDbo())
@@ -32,3 +36,7 @@ class MongoDbGroupStorage(
         repo.saveAll(dbos)
     }
 }
+
+class GroupWithNameDoesNotExist(val name: String): RuntimeException()
+
+class GroupWithIdDoesNotExist(val id: UUID): RuntimeException()

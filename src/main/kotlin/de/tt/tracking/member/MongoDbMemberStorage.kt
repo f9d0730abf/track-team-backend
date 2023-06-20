@@ -12,6 +12,14 @@ class MongoDbMemberStorage(
         .orElseThrow { NoSuchElementException() }
         .toMember()
 
+    override fun get(name: String): Member = repo
+        .findByName(name)
+        .map(MemberDbo::toMember)
+        .orElse(NoMember)
+
+    override fun exists(name: String): Boolean = repo
+        .existsByName(name)
+
     override fun store(member: Member) {
         repo.save(member.toDbo())
     }

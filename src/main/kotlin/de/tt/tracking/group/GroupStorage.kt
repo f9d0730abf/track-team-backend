@@ -9,6 +9,8 @@ interface GroupStorage {
 
     fun get(name: String): Group
 
+    fun exists(name: String): Boolean
+
     fun store(group: Group)
 
     fun store(groups: Set<Group>)
