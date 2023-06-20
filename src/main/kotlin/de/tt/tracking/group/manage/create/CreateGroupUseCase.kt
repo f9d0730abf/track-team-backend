@@ -9,8 +9,8 @@ import java.util.UUID
 class CreateGroupUseCase(
     private val storage: GroupStorage
 ) {
-    fun createGroup(name: String): UUID {
-        val group = Group(name)
+    fun createGroup(name: String, password: String): UUID {
+        val group = Group(name, password)
 
         storage.store(group)
 

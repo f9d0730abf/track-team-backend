@@ -9,10 +9,11 @@ import java.util.UUID
 
 data class Group(
     val id: UUID,
+    val password: String,
     val name: String,
     val members: Set<GroupMember>,
 ) {
-    constructor(name: String) : this(UUID.randomUUID(), name, emptySet())
+    constructor(name: String, password: String) : this(UUID.randomUUID(), password, name, emptySet())
 
     fun changePosition(memberId: UUID, newLatitude: Double, newLongitude: Double): Group {
         val newMembers = members
@@ -29,6 +30,8 @@ data class Group(
         return copy(members = newMembers)
     }
 }
+
+val NoGroup = Group(UUID.fromString("00000000-0000-0000-0000-000000000000"), "NoPassword","NoGroup", emptySet())
 
 data class GroupMember(
     val id: UUID,

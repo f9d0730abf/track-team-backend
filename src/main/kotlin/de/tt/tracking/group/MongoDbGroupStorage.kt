@@ -17,6 +17,11 @@ class MongoDbGroupStorage(
         .map(GroupDbo::toGroup)
         .toSet()
 
+    override fun get(name: String): Group = repo
+        .findByName(name)
+        .map(GroupDbo::toGroup)
+        .orElse(NoGroup)
+
     override fun store(group: Group) {
         repo.save(group.toDbo())
     }

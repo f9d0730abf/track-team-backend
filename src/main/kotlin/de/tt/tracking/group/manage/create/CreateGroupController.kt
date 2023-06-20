@@ -10,9 +10,9 @@ import java.util.UUID
 @RequestMapping("/groups")
 class CreateGroupController(private val useCase: CreateGroupUseCase) {
 
-    data class CreateGroupRequest(val name: String)
+    data class CreateGroupRequest(val name: String, val password: String)
 
     @PostMapping
     fun createMember(@RequestBody request: CreateGroupRequest): UUID =
-        useCase.createGroup(request.name)
+        useCase.createGroup(request.name, request.password)
 }
