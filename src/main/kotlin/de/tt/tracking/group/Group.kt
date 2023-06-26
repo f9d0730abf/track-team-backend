@@ -25,6 +25,8 @@ data class Group(
     }
 
     fun addMember(newMember: Member): Group {
+        if (members.any { it.id == newMember.id }) return this
+
         val newMembers = members + GroupMember(newMember.id, newMember.name)
 
         return copy(members = newMembers)

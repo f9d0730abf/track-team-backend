@@ -13,9 +13,11 @@ data class Member(
         emptySet(),
     )
 
-    fun addGroup(groupId: UUID) = copy(
-        groups = groups + groupId
-    )
+    fun addGroup(groupId: UUID): Member {
+        if (groups.any { it == groupId }) return this
+
+        return copy(groups = groups + groupId)
+    }
 }
 
 val NoMember = Member(UUID.fromString("00000000-0000-0000-0000-000000000000"), "NoName", emptySet())
