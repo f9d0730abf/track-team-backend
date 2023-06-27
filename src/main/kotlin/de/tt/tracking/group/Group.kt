@@ -17,8 +17,9 @@ data class Group(
 
     fun changePosition(memberId: UUID, newLatitude: Double, newLongitude: Double): Group {
         val newMembers = members
-            .filter { it.id == memberId }
-            .map { it.changePosition(newLatitude, newLongitude) }
+            .map {
+                if (it.id != memberId) it else it.changePosition(newLatitude, newLongitude)
+            }
             .toSet()
 
         return copy(members = newMembers)
@@ -33,7 +34,7 @@ data class Group(
     }
 }
 
-val NoGroup = Group(UUID.fromString("00000000-0000-0000-0000-000000000000"), "NoPassword","NoGroup", emptySet())
+val NoGroup = Group(UUID.fromString("00000000-0000-0000-0000-000000000000"), "NoPassword", "NoGroup", emptySet())
 
 data class GroupMember(
     val id: UUID,
