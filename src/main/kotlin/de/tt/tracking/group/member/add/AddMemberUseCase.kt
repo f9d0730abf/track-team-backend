@@ -14,10 +14,9 @@ class AddMemberUseCase(
         val group = groupStorage.get(groupId)
         val newMember = memberStorage.get(memberId)
 
-        val updatedGroup = group.addMember(newMember)
         val updatedMember = newMember.addGroup(groupId)
+        val updatedGroup = group.addMember(updatedMember)
 
         groupStorage.store(updatedGroup)
-        memberStorage.store(updatedMember)
     }
 }

@@ -2,11 +2,10 @@ package de.tt.tracking.group
 
 import org.springframework.stereotype.Component
 import java.util.UUID
-import kotlin.jvm.optionals.getOrNull
 
 @Component
-class MongoDbGroupStorage(
-    private val repo: MongoDbGroupRepository
+class JpaGroupStorage(
+    private val repo: JpaGroupRepository
 ): GroupStorage {
     override fun get(id: UUID) = repo
         .findById(id)

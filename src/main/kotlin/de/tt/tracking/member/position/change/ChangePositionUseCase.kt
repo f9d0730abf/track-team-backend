@@ -1,24 +1,23 @@
 package de.tt.tracking.member.position.change
 
-import de.tt.tracking.group.GroupStorage
 import de.tt.tracking.member.MemberStorage
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import java.util.UUID
 
 @Component
 class ChangePositionUseCase(
     private val memberStorage: MemberStorage,
-    private val groupStorage: GroupStorage,
 ) {
+    private val logger = LoggerFactory.getLogger(this::class.java)
+
     fun changePosition(id: UUID, newLatitude: Double, newLongitude: Double) {
         val member = memberStorage.get(id)
 
-        val groups = groupStorage.get(member.groups)
+        val updatedMember = member.changePosition(newLatitude, newLongitude)
 
-        val updatedGroups = groups
-            .map { it.changePosition(id, newLatitude, newLongitude) }
-            .toSet()
+        memberStorage.store(updatedMember)
 
-        groupStorage.store(updatedGroups)
+        logger.info("Updated Position of ${member.name} to ($newLatitude, $newLongitude)")
     }
 }

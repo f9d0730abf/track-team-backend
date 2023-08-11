@@ -4,8 +4,8 @@ import org.springframework.stereotype.Component
 import java.util.UUID
 
 @Component
-class MongoDbMemberStorage(
-    private val repo: MongoDbMemberRepository
+class JpaMemberStorage(
+    private val repo: JpaMemberRepository
 ): MemberStorage {
     override fun get(id: UUID) = repo
         .findById(id)

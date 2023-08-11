@@ -1,17 +1,27 @@
 package de.tt.tracking.group
 
-import org.springframework.data.annotation.Id
-import org.springframework.data.mongodb.core.mapping.Document
+import de.tt.tracking.member.Member
+import de.tt.tracking.member.MemberDbo
+import de.tt.tracking.member.toDbo
+import jakarta.persistence.CascadeType
+import jakarta.persistence.Entity
+import jakarta.persistence.Id
+import jakarta.persistence.OneToMany
 import java.util.UUID
 
-@Document("groups")
-data class GroupDbo(
+@Entity
+class GroupDbo(
     @Id val id: UUID,
     val password: String,
     val name: String,
-    val members: Set<GroupMember>,
+    @OneToMany(cascade = [CascadeType.ALL])
+    val members: Set<MemberDbo>,
 ) {
-    fun toGroup() = Group(id, password, name, members)
+    fun toGroup() = Group(id, password, name, members.toMembers())
 }
 
-fun Group.toDbo() = GroupDbo(id, password, name, members)
+private fun Set<MemberDbo>.toMembers() = map { it.toMember() }.toSet()
+
+fun Group.toDbo() = GroupDbo(id, password, name, members.toDbo())
+
+private fun Set<Member>.toDbo() = map { it.toDbo() }.toSet()

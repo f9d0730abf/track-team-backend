@@ -1,15 +1,19 @@
 package de.tt.tracking.member
 
+import de.tt.tracking.NoId
+import de.tt.tracking.Position
 import java.util.UUID
 
 data class Member(
     val id: UUID,
     val name: String,
+    val position: Position,
     val groups: Set<UUID>,
 ) {
     constructor(name: String) : this(
         UUID.randomUUID(),
         name,
+        Position(),
         emptySet(),
     )
 
@@ -18,6 +22,10 @@ data class Member(
 
         return copy(groups = groups + groupId)
     }
+
+    fun changePosition(newLatitude: Double, newLongitude: Double) = copy(
+        position = position.change(newLatitude, newLongitude)
+    )
 }
 
-val NoMember = Member(UUID.fromString("00000000-0000-0000-0000-000000000000"), "NoName", emptySet())
+val NoMember = Member(NoId, "NoName", Position(), emptySet())
