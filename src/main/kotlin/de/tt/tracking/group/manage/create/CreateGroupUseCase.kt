@@ -2,7 +2,6 @@ package de.tt.tracking.group.manage.create
 
 import de.tt.tracking.group.Group
 import de.tt.tracking.group.GroupStorage
-import de.tt.tracking.group.NoGroup
 import org.springframework.stereotype.Component
 import java.lang.RuntimeException
 import java.util.UUID

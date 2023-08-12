@@ -1,0 +1,49 @@
+name: Java CI with Gradle
+
+on:
+  push:
+    branches: [ build-test ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: current
+          arguments: build
+      - name: Store build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: jar
+          path: build/libs/TrackTeam-*-SNAPSHOT.jar
+
+  deploy-to-render:
+    name: Deploy to render
+    needs: [ build ]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: render-deployment
+      - name: Restore build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: jar
+      - name: Move Artifact to root
+        run: mv TrackTeam-*-SNAPSHOT.jar TrackTeam.jar
+      - name: Commit Artifact
+        run: |
+          git config --global user.name 'Deploy Bot'
+          git config --global user.email 'noreply@deploybot.com'
+          git commit -am "Automated deployment"
+          git push
