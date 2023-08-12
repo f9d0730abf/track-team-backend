@@ -43,5 +43,5 @@ jobs:
         run: |
           git config --global user.name 'Deploy Bot'
           git config --global user.email 'noreply@deploybot.com'
-          git commit -am "Automated deployment"
+          git commit -am "Automated deployment at $(date)"
           git push
