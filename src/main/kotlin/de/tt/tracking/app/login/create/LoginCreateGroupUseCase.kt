@@ -21,8 +21,8 @@ class LoginCreateGroupUseCase(
         val newMember = createMember.createMember(username)
         val newGroup = createGroup.createGroup(groupName, groupPassword)
 
-        addMember.addMember(newGroup, newMember)
+        addMember.addMember(newGroup, newMember.id)
 
-        return SuccessfulLogin(newGroup, newMember)
+        return SuccessfulLogin(newGroup, newMember.id, newMember.color)
     }
 }

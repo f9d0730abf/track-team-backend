@@ -1,10 +1,10 @@
 package de.tt.tracking.app.login.join
 
+import de.tt.tracking.app.login.SuccessfulLogin
 import de.tt.tracking.group.GroupStorage
 import de.tt.tracking.group.member.add.AddMemberUseCase
 import de.tt.tracking.member.manage.create.CreateMemberUseCase
 import org.springframework.stereotype.Component
-import org.springframework.transaction.annotation.Transactional
 
 @Component
 class LoginJoinGroupUseCase(
@@ -24,9 +24,9 @@ class LoginJoinGroupUseCase(
 
         val newMember = createMember.createMember(username)
 
-        addMember.addMember(group.id, newMember)
+        addMember.addMember(group.id, newMember.id)
 
-        return SuccessfulLogin(group.id, newMember)
+        return SuccessfulLogin(group.id, newMember.id, newMember.color)
     }
 }
 

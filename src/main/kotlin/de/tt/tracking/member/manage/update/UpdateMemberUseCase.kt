@@ -1,17 +1,17 @@
-package de.tt.tracking.member.position.change
+package de.tt.tracking.member.manage.update
 
 import de.tt.tracking.member.MemberStorage
 import org.springframework.stereotype.Component
 import java.util.UUID
 
 @Component
-class ChangePositionUseCase(
+class UpdateMemberUseCase(
     private val memberStorage: MemberStorage,
 ) {
-    fun changePosition(id: UUID, newLatitude: Double, newLongitude: Double) {
+    fun updateProperties(id: UUID, color: Int) {
         val member = memberStorage.get(id)
 
-        val updatedMember = member.changePosition(newLatitude, newLongitude)
+        val updatedMember = member.changeProperties(color)
 
         memberStorage.store(updatedMember)
     }

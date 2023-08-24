@@ -13,7 +13,7 @@ class GetGroupUseCase(
         val group = storage.get(groupId)
 
         val members = group.members.map {
-            Member(it.name, Position.from(it.position), it.id == memberId)
+            Member(it.name, it.color, Position.from(it.position), it.id == memberId)
         }.toSet()
 
         return Group(group.name, members)
@@ -27,6 +27,7 @@ data class Group(
 
 data class Member(
     val name: String,
+    val color: Int,
     val position: Position,
     val isItYou: Boolean,
 )

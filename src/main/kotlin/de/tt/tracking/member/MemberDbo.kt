@@ -10,15 +10,16 @@ import jakarta.persistence.OneToOne
 import java.util.UUID
 
 @Entity
-data class MemberDbo(
+class MemberDbo(
     @Id val id: UUID,
     val name: String,
+    private val color: Int,
     @OneToOne(cascade = [CascadeType.ALL])
     val position: PositionDbo,
     @ElementCollection
     val groups: Set<UUID>,
 ) {
-    fun toMember() = Member(id, name, position.toPosition(), groups)
+    fun toMember() = Member(id, name, color, position.toPosition(), groups)
 }
 
-fun Member.toDbo() = MemberDbo(this.id, this.name, this.position.toDbo(), this.groups)
+fun Member.toDbo() = MemberDbo(this.id, this.name, this.color, this.position.toDbo(), this.groups)

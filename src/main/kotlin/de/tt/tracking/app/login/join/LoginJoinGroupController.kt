@@ -1,10 +1,10 @@
 package de.tt.tracking.app.login.join
 
 import de.tt.tracking.app.login.LoginRequest
+import de.tt.tracking.app.login.SuccessfulLogin
 import de.tt.tracking.group.GroupWithNameDoesNotExist
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatus.BAD_REQUEST
-import org.springframework.http.HttpStatus.NOT_FOUND
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
