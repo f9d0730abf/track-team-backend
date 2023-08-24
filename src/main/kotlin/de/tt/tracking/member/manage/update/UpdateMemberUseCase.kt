@@ -16,3 +16,5 @@ class UpdateMemberUseCase(
         memberStorage.store(updatedMember)
     }
 }
+
+class MemberWithIdDoesNotExist(memberId: UUID) : RuntimeException("Member mit id [$memberId] does not exist.")

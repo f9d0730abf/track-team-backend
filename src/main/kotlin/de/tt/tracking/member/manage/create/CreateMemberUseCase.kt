@@ -3,15 +3,16 @@ package de.tt.tracking.member.manage.create
 import de.tt.tracking.member.Member
 import de.tt.tracking.member.MemberStorage
 import org.springframework.stereotype.Component
+import java.util.UUID
 
 @Component
 class CreateMemberUseCase(
-    private val storage: MemberStorage
+    private val storage: MemberStorage,
 ) {
-    fun createMember(name: String): Member {
-        if (storage.exists(name)) throw MemberAlreadyExists(name)
+    fun forGroup(memberName: String, groupId: UUID): Member {
+        if (storage.existsInGroup(memberName, groupId)) throw MemberAlreadyExistsInGroup(memberName)
 
-        val newMember = Member(name)
+        val newMember = Member(memberName)
 
         storage.store(newMember)
 
@@ -19,6 +20,5 @@ class CreateMemberUseCase(
     }
 }
 
-class MemberAlreadyExists(
-    val name: String
-): RuntimeException()
+class MemberAlreadyExistsInGroup(memberName: String) :
+    RuntimeException("Member with name [$memberName] already exists in group.")

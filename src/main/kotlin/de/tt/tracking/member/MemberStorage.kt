@@ -7,7 +7,7 @@ interface MemberStorage {
 
     fun get(name: String): Member
 
-    fun exists(name: String): Boolean
+    fun existsInGroup(name: String, groupId: UUID): Boolean
 
     fun store(member: Member)
 }

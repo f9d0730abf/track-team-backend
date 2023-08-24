@@ -51,3 +51,7 @@ data class Position(
         )
     }
 }
+
+class GroupWithNameDoesNotExist(val name: String): RuntimeException("Group with name [$name] does not exist.")
+
+class GroupWithIdDoesNotExist(val id: UUID): RuntimeException("Group with id [$id] does not exist.")

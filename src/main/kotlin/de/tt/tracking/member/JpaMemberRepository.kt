@@ -9,5 +9,5 @@ import java.util.UUID
 interface JpaMemberRepository: JpaRepository<MemberDbo, UUID> {
     fun findByName(name: String): Optional<MemberDbo>
 
-    fun existsByName(name: String): Boolean
+    fun existsByNameAndGroupsContains(name: String, groupId: UUID): Boolean
 }

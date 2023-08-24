@@ -18,8 +18,8 @@ class LoginCreateGroupUseCase(
         groupName: String,
         groupPassword: String,
     ): SuccessfulLogin {
-        val newMember = createMember.createMember(username)
         val newGroup = createGroup.createGroup(groupName, groupPassword)
+        val newMember = createMember.forGroup(username, newGroup)
 
         addMember.addMember(newGroup, newMember.id)
 

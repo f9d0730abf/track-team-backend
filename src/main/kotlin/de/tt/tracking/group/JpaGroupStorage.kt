@@ -1,5 +1,7 @@
 package de.tt.tracking.group
 
+import de.tt.tracking.group.manage.get.GroupWithIdDoesNotExist
+import de.tt.tracking.group.manage.get.GroupWithNameDoesNotExist
 import org.springframework.stereotype.Component
 import java.util.UUID
 
@@ -35,7 +37,3 @@ class JpaGroupStorage(
         repo.saveAll(dbos)
     }
 }
-
-class GroupWithNameDoesNotExist(val name: String): RuntimeException()
-
-class GroupWithIdDoesNotExist(val id: UUID): RuntimeException()

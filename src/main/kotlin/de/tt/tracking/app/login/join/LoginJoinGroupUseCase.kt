@@ -20,9 +20,9 @@ class LoginJoinGroupUseCase(
     ): SuccessfulLogin {
         val group = groupStorage.get(groupName)
 
-        if (group.password != groupPassword) throw WrongGroupPasswordException()
+        if (group.password != groupPassword) throw InvalidGroupPasswordException()
 
-        val newMember = createMember.createMember(username)
+        val newMember = createMember.forGroup(username, group.id)
 
         addMember.addMember(group.id, newMember.id)
 
@@ -30,4 +30,4 @@ class LoginJoinGroupUseCase(
     }
 }
 
-class WrongGroupPasswordException : RuntimeException()
+class InvalidGroupPasswordException : RuntimeException("Group password is invalid.")
